@@ -60,7 +60,7 @@ fun TopicApp() {
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
-            .padding(start = layoutDirection, end = layoutDirection )
+            .padding(start = layoutDirection, end = layoutDirection)
     ) { innerPadding ->
         TopicGrid(modifier = Modifier.padding(innerPadding))
     }
@@ -123,7 +123,6 @@ fun TopicCard(topic: Topic, modifier: Modifier = Modifier) {
         }
     }
 }
-
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
