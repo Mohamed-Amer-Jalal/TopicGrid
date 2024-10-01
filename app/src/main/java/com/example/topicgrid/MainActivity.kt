@@ -23,6 +23,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -33,6 +34,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.topicgrid.data.DataSource
@@ -98,7 +100,7 @@ fun TopicCard(topic: Topic, modifier: Modifier = Modifier) {
                 )
             }
             Column {
-                Text(
+                TopicText(
                     text = stringResource(topic.name),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(
@@ -113,7 +115,7 @@ fun TopicCard(topic: Topic, modifier: Modifier = Modifier) {
                         painter = painterResource(R.drawable.courses), contentDescription = null,
                         modifier = Modifier.padding(start = 16.dp)
                     )
-                    Text(
+                    TopicText(
                         text = topic.numCourses.toString(),
                         style = MaterialTheme.typography.labelMedium,
                         modifier = Modifier.padding(start = 8.dp)
@@ -122,6 +124,11 @@ fun TopicCard(topic: Topic, modifier: Modifier = Modifier) {
             }
         }
     }
+}
+
+@Composable
+fun TopicText(text: String, modifier: Modifier = Modifier, style: TextStyle = LocalTextStyle.current) {
+    Text(text = text, modifier = modifier, style = style)
 }
 
 @Preview(showBackground = true, showSystemUi = true)
