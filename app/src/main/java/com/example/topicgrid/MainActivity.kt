@@ -9,9 +9,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -24,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,17 +45,24 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TopicGridTheme {
-                Scaffold(
-                    modifier = Modifier.padding(
-                        start = 8.dp,
-                        top = 8.dp,
-                        end = 8.dp
-                    )
-                ) { innerPadding ->
-                    TopicGrid(modifier = Modifier.padding(innerPadding))
-                }
+                TopicApp()
             }
         }
+    }
+}
+
+@Composable
+fun TopicApp() {
+    val layoutDirection = WindowInsets.safeDrawing
+        .asPaddingValues()
+        .calculateStartPadding(LocalLayoutDirection.current)
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+            .padding(start = layoutDirection, end = layoutDirection )
+    ) { innerPadding ->
+        TopicGrid(modifier = Modifier.padding(innerPadding))
     }
 }
 
@@ -58,13 +72,16 @@ fun TopicGrid(modifier: Modifier = Modifier) {
         columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = modifier
+        modifier = modifier.padding(
+            start = 8.dp,
+            top = 8.dp,
+            end = 8.dp
+        )
     ) {
         items(DataSource.topics) { topic ->
             TopicCard(topic = topic)
         }
     }
-
 }
 
 @Composable
@@ -108,7 +125,7 @@ fun TopicCard(topic: Topic, modifier: Modifier = Modifier) {
 }
 
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview() {
     TopicGridTheme {
