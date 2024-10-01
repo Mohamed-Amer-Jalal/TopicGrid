@@ -127,7 +127,11 @@ fun TopicCard(topic: Topic, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TopicText(text: String, modifier: Modifier = Modifier, style: TextStyle = LocalTextStyle.current) {
+fun TopicText(
+    text: String,
+    modifier: Modifier = Modifier,
+    style: TextStyle = LocalTextStyle.current
+) {
     Text(text = text, modifier = modifier, style = style)
 }
 
